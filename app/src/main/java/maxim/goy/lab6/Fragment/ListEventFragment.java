@@ -3,7 +3,10 @@ package maxim.goy.lab6.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import maxim.goy.lab6.Adapter.EventAdapter;
+import maxim.goy.lab6.ChangeEventActivity;
 import maxim.goy.lab6.Model.Event;
 import maxim.goy.lab6.Model.EventsList;
 import maxim.goy.lab6.R;
@@ -20,6 +24,7 @@ import maxim.goy.lab6.R;
 public class ListEventFragment extends Fragment {
     ListView events;
     EventsList eventsList;
+    Event selectedItem;
 
     View view;
 
@@ -57,7 +62,7 @@ public class ListEventFragment extends Fragment {
         eventsList = new EventsList(getContext());
         EventAdapter adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
         events.setAdapter(adapter);
-        //registerForContextMenu(events);
+        registerForContextMenu(events);
         events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -68,4 +73,41 @@ public class ListEventFragment extends Fragment {
         });
     }
 
+    public static final int IDM_OPEN = 101;
+    public static final int IDM_REMOVE = 102;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(Menu.NONE, IDM_OPEN, Menu.NONE, "Открыть");
+        menu.add(Menu.NONE, IDM_REMOVE, Menu.NONE, "Удалить");
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        selectedItem = (Event) events.getItemAtPosition(info.position);
+        switch (item.getItemId()) {
+            case IDM_OPEN:
+                InfoEvent();
+                return true;
+            /*case R.id.change:
+                ChangeEvent();
+                return true;
+            case R.id.delete:
+                showDialog(DIALOG_DELETE);
+                return true;*/
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    public void InfoEvent() {
+        Intent intent = new Intent(getContext(), ChangeEventActivity.class);
+        intent.putExtra("event", selectedItem);
+        startActivity(intent);
+    }
 }
