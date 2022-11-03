@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Asus/Desktop/PMC/lab6/app/src/main/res/layout-land/activity_main.xml" value="0.21428571428571427" />
+        <entry key="..\:/Users/Asus/Desktop/PMC/lab6/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Desktop/PMC/lab6/app/src/main/res/layout/detail_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Desktop/PMC/lab6/app/src/main/res/layout/list_events_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/bstu/lab6/app/src/main/res/layout/activity_add_event.xml" value="0.21467391304347827" />
         <entry key="..\:/bstu/lab6/app/src/main/res/layout/activity_change_event.xml" value="0.36666666666666664" />
         <entry key="..\:/bstu/lab6/app/src/main/res/layout/activity_main.xml" value="0.36231884057971014" />
