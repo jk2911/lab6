@@ -1,6 +1,9 @@
 package maxim.goy.lab6.Fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -25,6 +28,8 @@ public class ListEventFragment extends Fragment {
     ListView events;
     EventsList eventsList;
     Event selectedItem;
+    EventAdapter adapter;
+    final int DIALOG_DELETE = 1;
 
     View view;
 
@@ -60,7 +65,7 @@ public class ListEventFragment extends Fragment {
 
     public void setListEvents() {
         eventsList = new EventsList(getContext());
-        EventAdapter adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
+        adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
         events.setAdapter(adapter);
         registerForContextMenu(events);
         events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,6 +99,8 @@ public class ListEventFragment extends Fragment {
             case IDM_OPEN:
                 InfoEvent();
                 return true;
+            case IDM_REMOVE:
+               showDialog();
             /*case R.id.change:
                 ChangeEvent();
                 return true;
@@ -110,4 +117,27 @@ public class ListEventFragment extends Fragment {
         intent.putExtra("event", selectedItem);
         startActivity(intent);
     }
+    protected void showDialog() {
+        AlertDialog.Builder al = new AlertDialog.Builder(getContext());
+        al.setTitle("Удаление");
+        al.setMessage("Вы действительно хотите удалить мероприятие?");
+        al.setPositiveButton("Да", clickListener);
+        al.setNegativeButton("Нет", clickListener);
+        al.show();
+    }
+
+    DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            switch (i) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    eventsList.RemoveEvent(selectedItem);
+                    adapter.notifyDataSetChanged();
+                    return;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    return;
+
+            }
+        }
+    };
 }
