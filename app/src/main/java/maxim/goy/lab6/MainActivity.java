@@ -23,16 +23,17 @@ public class MainActivity extends AppCompatActivity implements ListEventFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //fragmentManager.beginTransaction().setReorderingAllowed(true).
-        //        replace(R.id.fragment_container_view, ListEventFragment.class, savedInstanceState).
-          //      commit();
+        fragmentManager.beginTransaction().
+                setReorderingAllowed(true).
+                replace(R.id.fragment_container_view, ListEventFragment.class, savedInstanceState).
+                commit();
 
-        /*if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fragmentManager.beginTransaction().setReorderingAllowed(true).
                     replace(R.id.fragment_item_event, DetailFragment.class, savedInstanceState).
                     commit();
             fragmentManager.popBackStack();
-        }*/
+        }
     }
 
     @Override
