@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -68,14 +69,26 @@ public class ListEventFragment extends Fragment {
         adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
         events.setAdapter(adapter);
         registerForContextMenu(events);
-        events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                // по позиции получаем выбранный элемент
-                Event selectedItem = (Event) events.getItemAtPosition(position);
-                fragmentSendDataListener.onSendData(selectedItem);
-            }
-        });
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    // по позиции получаем выбранный элемент
+                    Event selectedItem = (Event) events.getItemAtPosition(position);
+                    fragmentSendDataListener.onSendData(selectedItem);
+                }
+            });
+        }
+        else {
+            events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    // по позиции получаем выбранный элемент
+                    Event selectedItem = (Event) events.getItemAtPosition(position);
+                    fragmentSendDataListener.onSendData(selectedItem);
+                }
+            });
+        }
     }
 
     public static final int IDM_OPEN = 101;
@@ -100,7 +113,7 @@ public class ListEventFragment extends Fragment {
                 InfoEvent();
                 return true;
             case IDM_REMOVE:
-               showDialog();
+                showDialog();
             /*case R.id.change:
                 ChangeEvent();
                 return true;
@@ -117,6 +130,7 @@ public class ListEventFragment extends Fragment {
         intent.putExtra("event", selectedItem);
         startActivity(intent);
     }
+
     protected void showDialog() {
         AlertDialog.Builder al = new AlertDialog.Builder(getContext());
         al.setTitle("Удаление");
