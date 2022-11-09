@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements ListEventFragment
             intent.putExtra("event", data);
             startActivity(intent);
         }
-
+        else{
+            DetailFragment fragment = (DetailFragment)getSupportFragmentManager().
+                    findFragmentById(R.id.fragment_item_event);
+            fragment.setSelectedItem(data);
+        }
     }
 }
