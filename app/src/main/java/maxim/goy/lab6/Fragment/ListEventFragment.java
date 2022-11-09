@@ -69,26 +69,14 @@ public class ListEventFragment extends Fragment {
         adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
         events.setAdapter(adapter);
         registerForContextMenu(events);
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    // по позиции получаем выбранный элемент
-                    Event selectedItem = (Event) events.getItemAtPosition(position);
-                    fragmentSendDataListener.onSendData(selectedItem);
-                }
-            });
-        }
-        else {
-            events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    // по позиции получаем выбранный элемент
-                    Event selectedItem = (Event) events.getItemAtPosition(position);
-                    fragmentSendDataListener.onSendData(selectedItem);
-                }
-            });
-        }
+        events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                // по позиции получаем выбранный элемент
+                Event selectedItem = (Event) events.getItemAtPosition(position);
+                fragmentSendDataListener.onSendData(selectedItem);
+            }
+        });
     }
 
     public static final int IDM_OPEN = 101;
