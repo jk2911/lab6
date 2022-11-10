@@ -19,6 +19,9 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import maxim.goy.lab6.Adapter.EventAdapter;
 import maxim.goy.lab6.ChangeEventActivity;
 import maxim.goy.lab6.Model.Event;
@@ -142,4 +145,23 @@ public class ListEventFragment extends Fragment {
             }
         }
     };
+    public void sortedEventsInAsc() {
+        Collections.sort(eventsList.events, new Comparator<Event>() {
+            @Override
+            public int compare(Event event, Event t1) {
+                return event.calendar.compareTo(t1.calendar);
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+
+    public void sortedEventsInDesc() {
+        Collections.sort(eventsList.events, new Comparator<Event>() {
+            @Override
+            public int compare(Event event, Event t1) {
+                return t1.calendar.compareTo(event.calendar);
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
 }

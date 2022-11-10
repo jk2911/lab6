@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import maxim.goy.lab6.Fragment.DetailFragment;
 import maxim.goy.lab6.Fragment.ListEventFragment;
 import maxim.goy.lab6.Model.Event;
@@ -50,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements ListEventFragment
                         AddEventActivity.class);
                 startActivity(intent);
                 return true;
-            /*case R.id.asc_order:
+            case R.id.asc_order:
                 sortedEventsInAsc();
                 return true;
             case R.id.desc_order:
                 sortedEventsInDesc();
-                return true;*/
+                return true;
             default:
                 return true;
         }
@@ -73,5 +76,15 @@ public class MainActivity extends AppCompatActivity implements ListEventFragment
                     findFragmentById(R.id.fragment_item_event);
             fragment.setSelectedItem(data);
         }
+    }
+    public void sortedEventsInAsc(){
+        ListEventFragment fragment = (ListEventFragment)  getSupportFragmentManager().
+                findFragmentById(R.id.fragment_container_view);
+        fragment.sortedEventsInAsc();
+    }
+    public void sortedEventsInDesc(){
+        ListEventFragment fragment = (ListEventFragment)  getSupportFragmentManager().
+                findFragmentById(R.id.fragment_container_view);
+        fragment.sortedEventsInDesc();
     }
 }
