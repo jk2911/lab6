@@ -24,6 +24,8 @@ import java.util.Comparator;
 
 import maxim.goy.lab6.Adapter.EventAdapter;
 import maxim.goy.lab6.ChangeEventActivity;
+import maxim.goy.lab6.DB.DatabaseAdapter;
+import maxim.goy.lab6.DB.IRepository;
 import maxim.goy.lab6.Model.Event;
 import maxim.goy.lab6.Model.EventsList;
 import maxim.goy.lab6.R;
@@ -33,6 +35,7 @@ public class ListEventFragment extends Fragment {
     EventsList eventsList;
     Event selectedItem;
     EventAdapter adapter;
+    IRepository<Event> db= new DatabaseAdapter(getContext());
     final int DIALOG_DELETE = 1;
 
     View view;
@@ -69,7 +72,7 @@ public class ListEventFragment extends Fragment {
 
     public void setListEvents() {
         eventsList = new EventsList(getContext());
-        adapter = new EventAdapter(getContext(), R.layout.list_item, eventsList.events);
+        adapter = new EventAdapter(getContext(), R.layout.list_item, db.getAll());
         events.setAdapter(adapter);
         registerForContextMenu(events);
         events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -136,7 +139,7 @@ public class ListEventFragment extends Fragment {
         public void onClick(DialogInterface dialogInterface, int i) {
             switch (i) {
                 case DialogInterface.BUTTON_POSITIVE:
-                    eventsList.RemoveEvent(selectedItem);
+                    db.remove(selectedItem.id);
                     adapter.notifyDataSetChanged();
                     return;
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -146,7 +149,7 @@ public class ListEventFragment extends Fragment {
         }
     };
     public void sortedEventsInAsc() {
-        Collections.sort(eventsList.events, new Comparator<Event>() {
+        Collections.sort(db.getAll(), new Comparator<Event>() {
             @Override
             public int compare(Event event, Event t1) {
                 return event.calendar.compareTo(t1.calendar);
@@ -156,7 +159,7 @@ public class ListEventFragment extends Fragment {
     }
 
     public void sortedEventsInDesc() {
-        Collections.sort(eventsList.events, new Comparator<Event>() {
+        Collections.sort(db.getAll(), new Comparator<Event>() {
             @Override
             public int compare(Event event, Event t1) {
                 return t1.calendar.compareTo(event.calendar);
