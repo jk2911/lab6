@@ -6,7 +6,7 @@ public interface IRepository<T> {
     void close();
     List<T> getAll();
     long getCount();
-    T get();
+    T get(long id);
     long insert();
     long update();
 }
