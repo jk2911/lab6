@@ -7,6 +7,7 @@ public interface IRepository<T> {
     List<T> getAll();
     long getCount();
     T get(long id);
-    long insert();
-    long update();
+    long insert(T item);
+    long update(T item);
+    long remove(long id);
 }
