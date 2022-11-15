@@ -10,4 +10,5 @@ public interface IRepository<T> {
     long insert(T item);
     long update(T item);
     long remove(long id);
+    void open();
 }
