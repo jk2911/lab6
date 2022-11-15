@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class Event implements Serializable {
-    public final int id;
+    public int id;
     public String name;
     public String description;
     public Calendar calendar;
@@ -21,6 +21,19 @@ public class Event implements Serializable {
 
     public Event(int id, String name, String description, Calendar calendar) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.calendar = calendar;
+    }
+
+    public Event(String name, String description, Calendar calendar, String pathImages) {
+        this.name = name;
+        this.description = description;
+        this.calendar = calendar;
+        this.pathImages = pathImages;
+    }
+
+    public Event(String name, String description, Calendar calendar) {
         this.name = name;
         this.description = description;
         this.calendar = calendar;
