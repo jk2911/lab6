@@ -23,9 +23,8 @@ public class DatabaseAdapter implements IRepository<Event> {
         dbHelper = new DatabaseHelper(context);
     }
 
-    public DatabaseAdapter open() {
+    public void open() {
         db = dbHelper.getWritableDatabase();
-        return this;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class DatabaseAdapter implements IRepository<Event> {
 
     private Cursor getAllEntries() {
         String[] columns = new String[]{dbHelper.COLUMN_ID, dbHelper.COLUMN_NAME,
-                dbHelper.COLUMN_DESCRIPTION, dbHelper.COLUMN_DESCRIPTION,
+                dbHelper.COLUMN_DESCRIPTION,
                 dbHelper.COLUMN_CALENDAR, dbHelper.COLUMN_PATH_IMAGE};
         return db.query(dbHelper.TABLE, columns, null, null, null, null, null);
     }
