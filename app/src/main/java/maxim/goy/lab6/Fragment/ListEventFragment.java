@@ -35,7 +35,7 @@ public class ListEventFragment extends Fragment {
     EventsList eventsList;
     Event selectedItem;
     EventAdapter adapter;
-    IRepository<Event> db= new DatabaseAdapter(getContext());
+    IRepository<Event> db = new DatabaseAdapter(this.getContext());
     final int DIALOG_DELETE = 1;
 
     View view;
@@ -71,8 +71,10 @@ public class ListEventFragment extends Fragment {
     }
 
     public void setListEvents() {
-        eventsList = new EventsList(getContext());
+        //eventsList = new EventsList(getContext());
+        db.open();
         adapter = new EventAdapter(getContext(), R.layout.list_item, db.getAll());
+        db.close();
         events.setAdapter(adapter);
         registerForContextMenu(events);
         events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,6 +150,7 @@ public class ListEventFragment extends Fragment {
             }
         }
     };
+
     public void sortedEventsInAsc() {
         Collections.sort(db.getAll(), new Comparator<Event>() {
             @Override

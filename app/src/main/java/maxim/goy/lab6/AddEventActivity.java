@@ -25,6 +25,8 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import maxim.goy.lab6.DB.DatabaseAdapter;
+import maxim.goy.lab6.DB.IRepository;
 import maxim.goy.lab6.Model.Event;
 import maxim.goy.lab6.Model.EventsList;
 import maxim.goy.lab6.Model.Image;
@@ -35,6 +37,7 @@ public class AddEventActivity extends AppCompatActivity {
     DatePicker date;
     ImageView imageView;
     EditText name, description;
+    IRepository<Event> db = new DatabaseAdapter(this);
 
 
     private final int Pick_image = 1;
@@ -100,8 +103,7 @@ public class AddEventActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        EventsList eventsList = new EventsList(this);
-        eventsList.AddEvent(event);
+       db.insert(event);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
