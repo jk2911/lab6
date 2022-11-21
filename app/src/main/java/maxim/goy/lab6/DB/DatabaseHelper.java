@@ -5,15 +5,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public final static String DATABASE_NAME = "events.db";
+    public final static String DATABASE_NAME = "eventsDB";
     public final static int SCHEMA = 1;
     final static String TABLE = "events";
 
-    public final static String COLUMN_NAME = "name";
     public final static String COLUMN_ID = "_id";
+    public final static String COLUMN_NAME = "name";
     public final static String COLUMN_DESCRIPTION = "description";
-    public final static String COLUMN_CALENDAR = "date";
+    public final static String COLUMN_CALENDAR = "calendar";
     public final static String COLUMN_PATH_IMAGE = "path_image";
+    public final static String createTable = "CREATE TABLE " + TABLE + " ("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_NAME + " TEXT, "
+            + COLUMN_CALENDAR + " TEXT,"
+            + COLUMN_PATH_IMAGE + " TEXT,"
+            + COLUMN_DESCRIPTION + " TEXT);";
 
 
     public DatabaseHelper(Context context) {
@@ -23,15 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE " + TABLE + " ("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NAME + " TEXT, "
-                + COLUMN_DESCRIPTION + " TEXT,"
-                + COLUMN_PATH_IMAGE + " TEXT,"
-                + COLUMN_CALENDAR + " TEXT);");
-        // добавление начальных данных
-        //db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-        //+ ", " + COLUMN_YEAR  + ") VALUES ('Том Смит', 1981);");
+        db.execSQL(createTable);
     }
 
     @Override
