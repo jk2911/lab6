@@ -103,7 +103,9 @@ public class AddEventActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       db.insert(event);
+        db.open();
+        db.insert(event);
+        db.close();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

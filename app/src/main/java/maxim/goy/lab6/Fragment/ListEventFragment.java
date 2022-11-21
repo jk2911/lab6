@@ -35,7 +35,7 @@ public class ListEventFragment extends Fragment {
     EventsList eventsList;
     Event selectedItem;
     EventAdapter adapter;
-    IRepository<Event> db = new DatabaseAdapter(this.getContext());
+    IRepository<Event> db;
     final int DIALOG_DELETE = 1;
 
     View view;
@@ -59,6 +59,7 @@ public class ListEventFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " должен реализовывать интерфейс OnFragmentInteractionListener");
         }
+        db = new DatabaseAdapter(context);
     }
 
     @Override
