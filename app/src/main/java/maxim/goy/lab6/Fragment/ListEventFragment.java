@@ -72,7 +72,6 @@ public class ListEventFragment extends Fragment {
     }
 
     public void setListEvents() {
-        //eventsList = new EventsList(getContext());
         db.open();
         adapter = new EventAdapter(getContext(), R.layout.list_item, db.getAll());
         db.close();
@@ -142,8 +141,10 @@ public class ListEventFragment extends Fragment {
         public void onClick(DialogInterface dialogInterface, int i) {
             switch (i) {
                 case DialogInterface.BUTTON_POSITIVE:
+                    db.open();
                     db.remove(selectedItem.id);
-                    adapter.notifyDataSetChanged();
+                    db.close();
+                    setListEvents();
                     return;
                 case DialogInterface.BUTTON_NEGATIVE:
                     return;
