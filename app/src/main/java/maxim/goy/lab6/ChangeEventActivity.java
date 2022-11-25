@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import maxim.goy.lab6.DB.DatabaseAdapter;
+import maxim.goy.lab6.DB.IRepository;
 import maxim.goy.lab6.Model.Event;
 import maxim.goy.lab6.Model.EventsList;
 import maxim.goy.lab6.Model.Image;
@@ -32,6 +34,7 @@ public class ChangeEventActivity extends AppCompatActivity {
     TimePicker time;
     ImageView image;
     Event event;
+    IRepository<Event> db = new DatabaseAdapter(this);
 
     private final int Pick_image = 1;
 
@@ -46,7 +49,13 @@ public class ChangeEventActivity extends AppCompatActivity {
         date = findViewById(R.id.calendar);
         time = findViewById(R.id.time);
 
-        event = (Event) getIntent().getExtras().getSerializable("event");
+        db.open();
+
+        int id = ((Event) getIntent().getExtras().getSerializable("event")).id;
+        event = db.get(id);
+
+        db.close();
+
         Image.getInstance().loadImageFromStorage(image, event.pathImages);
         name.setText(event.name);
         description.setText(event.description);
@@ -103,8 +112,6 @@ public class ChangeEventActivity extends AppCompatActivity {
     }
 
     public void changeEvent() {
-        EventsList eventsList = new EventsList(this);
-        eventsList.RemoveEvent(event);
         event.name = name.getText().toString();
         event.description = description.getText().toString();
         event.calendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDayOfMonth(),
@@ -115,6 +122,8 @@ public class ChangeEventActivity extends AppCompatActivity {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        eventsList.AddEvent(event);
+        db.open();
+        db.update(event);
+        db.close();
     }
 }
